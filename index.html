@@ -2,8 +2,27 @@
 <html>
 <head>
     <title>Página de Pagamento</title>
+    <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
     <h1>Bem-vindo à Página de Pagamento da Stripe</h1>
+    <button id="checkout-button">Pagar</button>
+    
+    <script type="text/javascript">
+        var stripe = Stripe('pk_live_51PacYZRvur2p3YJieJ1S8ygymAjSur5XIg6s7K1FKhe3xQTG7YXnqleSktDkgSKfjoh6VO5X2opill3brau0n3jn00LSw2PFo1');
+
+        var checkoutButton = document.getElementById('checkout-button');
+
+        checkoutButton.addEventListener('click', function () {
+            stripe.redirectToCheckout({
+                sessionId: 'ID_DA_SESSAO_AQUI'
+            }).then(function (result) {
+                if (result.error) {
+                    alert(result.error.message);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
+
