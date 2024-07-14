@@ -9,12 +9,11 @@
     <button id="checkout-button">Pagar</button>
     
     <script type="text/javascript">
-        var stripe = Stripe('{{ STRIPE_PUBLISHABLE_KEY }}');
+        var stripe = Stripe('pk_live_51PacYZRvur2p3YJieJ1S8ygymAjSur5XIg6s7K1FKhe3xQTG7YXnqleSktDkgSKfjoh6VO5X2opill3brau0n3jn00LSw2PFo1');
 
         var checkoutButton = document.getElementById('checkout-button');
 
         checkoutButton.addEventListener('click', function () {
-            // Aqui você pode fazer uma solicitação AJAX para /create-checkout-session no Flask
             fetch('/create-checkout-session', {
                 method: 'POST',
                 headers: {
@@ -24,7 +23,6 @@
             }).then(function (response) {
                 return response.json();
             }).then(function (data) {
-                // data.sessionId contém o ID da sessão retornado pela rota Flask
                 stripe.redirectToCheckout({
                     sessionId: data.sessionId
                 }).then(function (result) {
