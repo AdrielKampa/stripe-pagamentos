@@ -9,13 +9,12 @@
     <button id="checkout-button">Pagar</button>
     
     <script type="text/javascript">
-        // Substitua pela sua chave pública de produção (pk_live_...)
-        var stripe = Stripe('pk_live_51PacYZRvur2p3YJieJ1S8ygymAjSur5XIg6s7K1FKhe3xQTG7YXnqleSktDkgSKfjoh6VO5X2opill3brau0n3jn00LSw2PFo1');
+        var stripe = Stripe('{{ STRIPE_PUBLISHABLE_KEY }}'); // Substitua pela sua chave pública do Stripe
 
         var checkoutButton = document.getElementById('checkout-button');
 
         checkoutButton.addEventListener('click', function () {
-            fetch('/create-checkout-session', {
+            fetch('http://localhost:5000/create-checkout-session', { // Substitua pelo URL do seu servidor Flask
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -24,7 +23,6 @@
             }).then(function (response) {
                 return response.json();
             }).then(function (data) {
-                // Verifique se o sessionId está corretamente recuperado da resposta JSON
                 stripe.redirectToCheckout({
                     sessionId: data.sessionId // Certifique-se de que 'sessionId' é o campo correto na resposta JSON
                 }).then(function (result) {
