@@ -1,14 +1,10 @@
-import os
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, jsonify, request
 import stripe
+import os
 
 # Configurar chaves de API do Stripe a partir de variáveis de ambiente
 stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
 app = Flask(__name__)
-
-@app.route('/')
-def index():
-    return render_template('index.html', publishable_key=os.getenv('STRIPE_PUBLISHABLE_KEY'))
 
 @app.route('/create-checkout-session', methods=['POST'])
 def create_checkout_session():
