@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 from flask import Flask, render_template, jsonify, request
+from flask_cors import CORS  # Importe a extensão Flask-CORS
 import stripe
 
 # Carregar variáveis de ambiente do arquivo .env
@@ -10,6 +11,8 @@ load_dotenv()
 stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
 
 app = Flask(__name__)
+# Configurar CORS para permitir todas as origens durante o desenvolvimento
+CORS(app)
 
 @app.route('/')
 def index():
